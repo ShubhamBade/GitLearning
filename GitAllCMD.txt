@@ -1,0 +1,641 @@
+//use to know about who did commit operation
+git config --global user.name Shubham
+git config --global user.email shubhambade3@gmail.com
+
+//how to check whether user name and email has been setup or not
+git config --global user.name
+git config --global user.email
+
+//how to open vs code using git bash
+code .
+
+//how to initialize git with empty git repository
+git init
+
+//how to check empty respository created or not
+ls -lart
+
+//check status of git
+git status
+
+eg. On branch master
+No commits yet
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        welcome.html
+nothing added to commit but untracked files present (use "git add" to track)
+
+//how to move file from untracked to stage area
+git add welcome.html
+
+//now we can check status it should be added to stage with no commit
+$ git status
+
+On branch master
+No commits yet
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   welcome.html
+
+//we need to do initial commit first for first time
+git commit
+
+//it will opem vim editor type initial commit at first line
+initial commit
+esc:wq for exit from editor
+
+//it will like
+$ git commit
+[master (root-commit) fc088a6] initial commit
+ 1 file changed, 18 insertions(+)
+ create mode 100644 welcome.html
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+//how to create file using git bash
+touch about.html
+touch contact.html
+
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        about.html
+        contact.html
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+//now i need to add all file into stagging area. lets see how we can do that
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git add -A
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   about.html
+        new file:   contact.html
+
+//now i have upadted contact.html with code and run git status
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   about.html
+        new file:   contact.html
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   contact.html
+
+//lets add into stage area again bec we have modified version
+$git add contact.htmnl or git add -A
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   about.html
+        new file:   contact.html
+
+//first what i did i used git commit it open vim editor and all
+//now to avoid this i am using below command
+$ git commit -m "Added HTML Code in Contact.html"
+[master 079c114] Added HTML Code in Contact.html
+ 2 files changed, 13 insertions(+)
+ create mode 100644 about.html
+ create mode 100644 contact.html
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+
+//how to match working director with last commit
+//to recover previous version
+//i have modified contact.html with come content now i want previous version/commit
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   contact.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git checkout contact.html
+Updated 1 path from the index
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+//suppose i have multiple file which updated mistakenly see how i can recover it 
+//last commit
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   about.html
+        modified:   contact.html
+        modified:   welcome.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git checkout -f
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+
+//how to check what all commit we did till now and who did that
+$ git log
+commit 0966a83c26c51370edb994f9315808a1472b22c7 (HEAD -> master)
+Author: Shubham <shubhambade3@gmail.com>
+Date:   Sat Mar 25 20:30:40 2023 +0530
+
+    About.html has been updated with HTML Content
+
+commit 079c114adc6d11411aa3ec2bbd4ddc25445cc140
+Author: Shubham <shubhambade3@gmail.com>
+Date:   Sat Mar 25 20:17:58 2023 +0530
+
+    Added HTML Code in Contact.html
+
+commit fc088a6e98c9af4ad03108823fece0f9b821f842
+Author: Shubham <shubhambade3@gmail.com>
+Date:   Sat Mar 25 20:04:04 2023 +0530
+
+    initial commit
+
+//how to filter log output eg. i want last 1 commit in deatils
+//we can see commit in details
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git log -p -1
+commit 0966a83c26c51370edb994f9315808a1472b22c7 (HEAD -> master)
+Author: Shubham <shubhambade3@gmail.com>
+Date:   Sat Mar 25 20:30:40 2023 +0530
+
+    About.html has been updated with HTML Content
+
+diff --git a/about.html b/about.html
+index e69de29..db2adac 100644
+--- a/about.html
++++ b/about.html
+@@ -0,0 +1,13 @@
++<html>
++    <head>
++        <style>
++            h1{
++                text-align: center;
++                color: blue;
++            }
++        </style>
++    </head>
++    <body>
++        <h1>About Page</h1>
++    </body>
++</html>
+:
+//press q here for exit from current mode
+
+
+//diff compare working tree to stagging area
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   about.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git diff
+diff --git a/about.html b/about.html
+index db2adac..1db8ec7 100644
+--- a/about.html
++++ b/about.html
+@@ -9,5 +9,6 @@
+     </head>
+     <body>
+         <h1>About Page</h1>
++        <h2>Something about myself</h2>
+     </body>
+ </html>
+\ No newline at end of file
+
+
+//what we did till now addding file to stage and then commit
+//is there any way to do direct commit
+//i have did some modification in about.html
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   about.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+//file is in modification and satgging area
+//directly doing commit
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git commit -a -m "Skipped stagging area and did commit directly"
+[master 68eede0] Skipped stagging area and did commit directly
+ 1 file changed, 7 insertions(+)
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+//remove file using rm
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ touch dumpfile.html
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ ls
+about.html  contact.html  dumpfile.html  welcome.html
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        dumpfile.html
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git add dumpfile.html
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   dumpfile.html
+
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git commit -m "Dumpfile has been created and commited from stage"
+[master 46cb691] Dumpfile has been created and commited from stage
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 dumpfile.html
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+//removing file from stagging area not from local disk
+git rm --cached dumpfile.html
+
+
+$ git rm --cached dumpfile.html
+rm 'dumpfile.html'
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    dumpfile.html
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        dumpfile.html
+
+//now we are remving file from local disk and stage
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git add -A
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git rm dumpfile.html
+rm 'dumpfile.html'
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ ls
+about.html  contact.html  welcome.html
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    dumpfile.html
+
+$ git commit -a -m "Removing dumpfile"
+[master 04f1bc3] Removing dumpfile
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 dumpfile.html
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git log
+commit 04f1bc399482fc9ef313be10bab2cba07c84d0f3 (HEAD -> master)
+Author: Shubham <shubhambade3@gmail.com>
+Date:   Sat Mar 25 21:27:10 2023 +0530
+
+    Removing dumpfile
+
+commit 46cb691fefcee341e522d7576e589177d8e1cb51
+Author: Shubham <shubhambade3@gmail.com>
+Date:   Sat Mar 25 21:21:21 2023 +0530
+
+    Dumpfile has been created and commited from stage
+
+
+//how to get short useful message from status
+git status -s
+//i have modified two files with some code
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status -s
+ M about.html
+ M welcome.html
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git add about.html
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status -s
+M  about.html
+ M welcome.html
+
+
+//lets learn about .gitIgnored file
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ touch .gitignore
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ ls
+about.html  contact.html  welcome.html
+
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .gitignore
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git add -A
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   .gitignore
+
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git commit -a -m "mylogs.log has been added to .gitignore for ingnore"
+[master b610a99] mylogs.log has been added to .gitignore for ingnore
+ 1 file changed, 1 insertion(+)
+ create mode 100644 .gitignore
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+//Creating branches - main branch is master
+$git branch
+*master
+
+$ git branch
+* master
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git branch feature
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git branch
+  feature
+* master
+
+//how to switch master to feature branch
+$ git checkout feature
+Switched to branch 'feature'
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (feature)
+$ git branch
+* feature
+  master
+
+//after modifiying contact.html in feature branch
+$ git status
+On branch feature
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   contact.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (feature)
+$ git add -A
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (feature)
+$ git status
+On branch feature
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   contact.html
+$ git commit -m "We have modify beuty of Contact.html in Feature branch not master"
+[feature b4a7a74] We have modify beuty of Contact.html in Feature branch not master
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (feature)
+$ git status
+On branch feature
+nothing to commit, working tree clean
+
+//now i have to merge branch changes with master lets see how we can do that
+
+$ git checkout master
+Switched to branch 'master'
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git merge feature
+Updating b610a99..b4a7a74
+Fast-forward
+ contact.html | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git log -p -1
+commit b4a7a74ea514f994bcbd7a47539473d7d8c2b7f0 (HEAD -> master, feature)
+Author: Shubham <shubhambade3@gmail.com>
+Date:   Sun Mar 26 10:26:20 2023 +0530
+
+    We have modify beuty of Contact.html in Feature branch not master
+
+diff --git a/contact.html b/contact.html
+index 36fb6e5..b9e2b5d 100644
+--- a/contact.html
++++ b/contact.html
+@@ -3,11 +3,18 @@
+         <style>
+             h1{
+                 text-align: center;
+-                color: blue;
++                color: rgb(229, 229, 241);
++                background-color: black;
++            }
++            h2{
++                text-align: center;
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$
+
+//git branch help to create branch and show listed branches
+//i want to create new branch and move to newly created branch automatically
+//lets see how we can do that
+$ git checkout -b MoreBranchDetails
+Switched to a new branch 'MoreBranchDetails'
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (MoreBranchDetails)
+$ git branch
+* MoreBranchDetails
+  feature
+  master
+
+$ git status
+On branch MoreBranchDetails
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   contact.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (MoreBranchDetails)
+$ git add -A
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (MoreBranchDetails)
+$ git status
+On branch MoreBranchDetails
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   contact.html
+
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (MoreBranchDetails)
+$ git commit -a -m "MoreDetailsBranch Modification has been done : Contact.html"
+[MoreBranchDetails 1f08c3c] MoreDetailsBranch Modification has been done : Contact.html
+ 1 file changed, 9 insertions(+)
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (MoreBranchDetails)
+$ git status
+On branch MoreBranchDetails
+nothing to commit, working tree clean
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (MoreBranchDetails)
+$ git checkout master
+Switched to branch 'master'
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git merge MoreBranchDetails
+Updating b4a7a74..1f08c3c
+Fast-forward
+ contact.html | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 ~/OneDrive/Desktop/GItLearning (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+
+
+
+//how to connect with remote repository 
+$ git remote add origin https://github.com/ShubhamBade/GitLearning.git
+
+$ git remote -v
+origin  https://github.com/ShubhamBade/GitLearning.git (fetch)
+origin  https://github.com/ShubhamBade/GitLearning.git (push)
+
+$ git push -u origin master
+Enumerating objects: 31, done.
+Counting objects: 100% (31/31), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (28/28), done.
+Writing objects: 100% (31/31), 3.58 KiB | 916.00 KiB/s, done.
+Total 31 (delta 10), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (10/10), done.
+remote:
+remote: Create a pull request for 'master' on GitHub by visiting:
+remote:      https://github.com/ShubhamBade/GitLearning/pull/new/master
+remote:
+To https://github.com/ShubhamBade/GitLearning.git
+ * [new branch]      master -> master
+
+
+//here is new a new concept
+// how to make clone of remote repository and download on local system
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 /d/Pocketxtra/backend
+$ git init
+Initialized empty Git repository in D:/Pocketxtra/backend/.git/
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 /d/Pocketxtra/backend (master)
+$ git pull https://github.com/pocketxtra/backend.git
+
+//now we have repo on local system
+//now i want to create new branch and push this local repo
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 /d/Pocketxtra/backend (master)
+$ git branch
+* master
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 /d/Pocketxtra/backend (master)
+$ git checkout -b "develop-SB"
+Switched to a new branch 'develop-SB'
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 /d/Pocketxtra/backend (develop-SB)
+$ git branch
+* develop-SB
+  master
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 /d/Pocketxtra/backend (develop-SB)
+$ git remote add origin https://github.com/pocketxtra/backend.git
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 /d/Pocketxtra/backend (develop-SB)
+$ git branch
+* develop-SB
+  master
+
+532TS (G)@LAPTOP-GDSRCRH3 MINGW64 /d/Pocketxtra/backend (develop-SB)
+$ git push -u origin develop-SB
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+remote:
+remote: Create a pull request for 'develop-SB' on GitHub by visiting:
+remote:      https://github.com/pocketxtra/backend/pull/new/develop-SB
+remote:
+To https://github.com/pocketxtra/backend.git
+ * [new branch]      develop-SB -> develop-SB
+branch 'develop-SB' set up to track 'origin/develop-SB'.
+
+// now we have a branch on remote repo after making changes on local system and want to push on that branch
+//then make origin by taking http of branch and push 
